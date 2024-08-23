@@ -12,7 +12,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promauto"
 )
 
-const name = "staturl"
+const pluginName = "staturl"
 
 // done in 1.0
 type Staturl struct {
@@ -24,8 +24,10 @@ type Staturl struct {
 var (
 	// prometheus metrics
 	domainQueries = promauto.NewCounterVec(prometheus.CounterOpts{
-		Name: "domain_queries_total",
-		Help: "Total number of queries per domain.",
+		Namespace: plugin.Namespace,
+		Subsystem: pluginName,
+		Name:      "domain_queries_total",
+		Help:      "Total number of queries per domain.",
 	}, []string{"domain"})
 )
 
@@ -45,4 +47,4 @@ func (s *Staturl) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns.Msg
 	return plugin.NextOrFailure(s.Name(), s.Next, ctx, w, r)
 
 }
-func (su *Staturl) Name() string { return name }
+func (su *Staturl) Name() string { return pluginName }
