@@ -22,7 +22,7 @@ func (su Staturl) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns.Msg
 
 	log.Info(qname)
 
-	return dns.RcodeSuccess, nil
+	return su.Next.ServeDNS(ctx, w, r)
 
 }
 func (su Staturl) Name() string { return name }
