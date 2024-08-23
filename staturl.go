@@ -21,7 +21,8 @@ func (su Staturl) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns.Msg
 	qname := state.Name()
 
 	log.Info(qname)
-
+	m := new(dns.Msg)
+	w.WriteMsg(m)
 	return su.Next.ServeDNS(ctx, w, r)
 
 }
