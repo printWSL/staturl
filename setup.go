@@ -14,13 +14,13 @@ func init() {
 }
 
 func setup(c *caddy.Controller) error {
-	c.Next() // staturl
-	if c.NextArg() {
-		return plugin.Error("staturl", c.ArgErr())
+	s := &Staturl{
+		counters: make(map[string]uint64),
 	}
-	dnsserver.GetConfig(c).AddPlugin(func(next plugin.Handler) plugin.Handler {
 
-		return Staturl{Next: next}
+	dnsserver.GetConfig(c).AddPlugin(func(next plugin.Handler) plugin.Handler {
+		s.Next = next
+		return s
 	})
 	return nil
 }
