@@ -14,6 +14,7 @@ import (
 
 const name = "staturl"
 
+// done in 1.0
 type Staturl struct {
 	Next     plugin.Handler
 	mu       sync.Mutex
